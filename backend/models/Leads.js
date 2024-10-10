@@ -6,7 +6,7 @@ const leadSchema = new mongoose.Schema({
     email: { type: String },
     address: { type: String },
     status: { type: String, enum: ['new', 'in-progress', 'converted', 'lost'], default: 'new' },
-    assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    assignedTo: { type: String, ref: 'User' },
     nextFollowUpDate: { type: Date },
     nextFollowUpTime: { type: String },
     leadSource: { type: String },

@@ -51,6 +51,19 @@ const getLeads = async (req, res) => {
   }
 };
 
+const getLeadById = async (req, res) => {
+  
+  try {
+   
+    const {id} = req.params;
+    const lead = await Lead.find({_id:id})
+
+    res.json({ lead });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Update a lead
 const updateLead = async (req, res) => {
   const { id } = req.params;
@@ -79,4 +92,4 @@ const deleteLead = async (req, res) => {
   }
 };
 
-module.exports = { createLead, getLeads, updateLead, deleteLead };
+module.exports = { createLead, getLeads, updateLead, deleteLead, getLeadById };

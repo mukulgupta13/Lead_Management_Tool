@@ -1,6 +1,7 @@
 // server.js
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const connectDB = require('./config/db');
 
 // Load environment variables
@@ -13,7 +14,7 @@ const app = express();
 
 // Middleware
 app.use(express.json()); // Body parser
-
+app.use(cors());
 // Routes
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/leads', require('./routes/leadRoutes'));

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 // Generate JWT Token
 const generateToken = (userId) => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '3h' });
 };
 
 // Register a new user
@@ -49,8 +49,10 @@ const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        token: generateToken(user._id)
+        token: generateToken(user._id),
+        message :"Success"
       });
+     res.message = "Success";
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
     }
