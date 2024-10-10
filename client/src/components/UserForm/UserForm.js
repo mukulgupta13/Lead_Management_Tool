@@ -24,7 +24,7 @@ const UserForm = () => {
     e.preventDefault();
     // Process form data here, e.g., send it to an API
     createUser(formData).then((res) => {
-        navigate('/login');
+        navigate('/');
     }).catch((err) => {
         setError(err.response.data.message);
     })
@@ -91,7 +91,7 @@ const UserForm = () => {
         {error && <div className="error-message">{error}</div>}
         <button type="submit">Create User</button>
         <p>Already have an account:</p>
-        <button onClick={()=>navigate('/login')}>Go To Login</button>
+        <button onClick={()=>navigate('/')}>Go To Login</button>
       </form>
     </div>
   );

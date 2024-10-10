@@ -15,7 +15,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/lead-list" element ={<LeadList />}/>
-        <Route path="/login" element ={<Login/>}/>
+        <Route path="/" element ={<Login/>}/>
         <Route path="/leadForm" element ={<LeadForm/>}/>
         <Route path="/leadForm/:id" element ={<LeadForm/>}/>
         <Route path="/register" element ={<UserForm/>}/>
