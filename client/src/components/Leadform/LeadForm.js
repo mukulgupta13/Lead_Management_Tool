@@ -26,8 +26,9 @@ const LeadForm = () => {
         if (id) {
             fetchLeadById(id).then((res) => {
                 const data = res.data.lead;
-                setFormData(data[0]);
-                // console.log('ggggggg',data);
+                setFormData(data[0]);     // console.log('ggggggg',data);
+            }).catch((err)=>{
+                console.log(err);
             })
         }
     }, [id]);
