@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLeads } from '../../redux/actions/leadActions';
 import { deleteLead, fetchLeads } from '../../services/api'
 import './LeadList.css';
 import { useNavigate } from 'react-router-dom';
+import Pagination from '../../common_comp/Pagination';
 
+let PageSize = 20;
 const LeadList = () => {
+
+    const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
     const leads = useSelector((state) => state.leads);
     const [errorMessage, setErrorMessage] = useState("");
@@ -13,25 +17,31 @@ const LeadList = () => {
     useEffect(() => {
         LoadData();
     }, [])
-const LoadData = () =>{
-    fetchLeads().then((response) => {
-        const leadsData = response.data.leads;
-        console.log(leadsData); // Handle the response data
-        dispatch(setLeads(leadsData));
-        setErrorMessage("");
-    }).catch((error) => {
-        console.log(error.response.data.message);
-        setErrorMessage(error.response.data.message);
-    });
-}
-const DeleteLead = (id) =>{
-    deleteLead(id).then((res)=>{
-        LoadData();
-        console.log(res);
-    }).catch((err)=>{
-        console.log(err);
-    })
-}
+    const LoadData = () => {
+        fetchLeads().then((response) => {
+            const leadsData = response.data.leads;
+            console.log(leadsData); // Handle the response data
+            dispatch(setLeads(leadsData));
+            setErrorMessage("");
+        }).catch((error) => {
+            console.log(error.response.data.message);
+            setErrorMessage(error.response.data.message);
+        });
+    }
+    const currentData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return leads.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage]);
+
+    const DeleteLead = (id) => {
+        deleteLead(id).then((res) => {
+            LoadData();
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     const navigate = useNavigate();
     // Simulate fetching leads
     const goToForm = () => {
@@ -52,7 +62,7 @@ const DeleteLead = (id) =>{
             </ul> */}
             <div style={{ fontWeight: 'bold', marginTop: '10px', fontSize: '20px', color: 'red' }}>{errorMessage.length > 0 ? errorMessage : ""}</div>
             <div className="lead-container">
-                {leads.map((lead) => (
+                {currentData.map((lead) => (
                     <div key={lead._id} className="lead-item">
                         <div>{lead.leadName}</div>
                         <div>{lead.contactNumber}</div>
@@ -60,13 +70,21 @@ const DeleteLead = (id) =>{
                         <div>{lead.address}</div>
                         <div>{lead.status}</div>
                         <div>
-                            <button style={{margin: '2px'}} onClick={() => navigate(`/leadForm/${lead._id}`)}>Edit Lead</button>
-                            <button style={{margin: '2px'}} onClick={() => DeleteLead(lead._id)}>Delete Lead</button>
+                            <button style={{ margin: '2px' }} onClick={() => navigate(`/leadForm/${lead._id}`)}>Edit Lead</button>
+                            <button style={{ margin: '2px' }} onClick={() => DeleteLead(lead._id)}>Delete Lead</button>
                         </div>
                     </div>
                 ))}
-            </div>
+                <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={leads.length}
+                pageSize={PageSize}
+                onPageChange={page => setCurrentPage(page)}
+            />
+            </div>     
         </div>
+
     );
 };
 

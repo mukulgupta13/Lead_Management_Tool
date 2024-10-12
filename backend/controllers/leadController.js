@@ -31,7 +31,7 @@ const createLead = async (req, res) => {
 
 // Get all leads (with pagination, filtering, sorting, and searching)
 const getLeads = async (req, res) => {
-  const { page = 1, limit = 10, search = '', sort = 'leadName', status } = req.query;
+  const { page = 1, limit = 100, search = '', status } = req.query;
 
   try {
     const query = { leadName: new RegExp(search, 'i') };
@@ -39,7 +39,7 @@ const getLeads = async (req, res) => {
     if (status) query.status = status;
 
     const leads = await Lead.find(query)
-      .sort({ [sort]: 1 })
+      // .sort({ [sort]: 1 })
       .skip((page - 1) * limit)
       .limit(Number(limit));
 

@@ -11,6 +11,7 @@ const leadReducer = (state = initialState, action) => {
                 ...state,
                 leads: action.payload,
             };
+
         default:
             return state;
     }
