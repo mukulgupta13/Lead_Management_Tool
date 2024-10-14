@@ -9,7 +9,7 @@ const leadReducer = (state = initialState, action) => {
         case SET_LEADS:
             return {
                 ...state,
-                leads: action.payload,
+                leads: [...action.payload],
             };
 
         default:

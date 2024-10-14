@@ -4,12 +4,13 @@ import axios from 'axios';
 const API_URL = 'http://localhost:5000/api'; // Replace with your API URL
 
 
-export const fetchLeads = () => {
+export const fetchLeads = (query) => {
     const token = localStorage.getItem('auth-token');
     return axios.get(`${API_URL}/leads`,{
         headers: {
             Authorization: `Bearer ${token}`
-        }
+        },
+        params: query
     })
 };
 export const fetchLeadById = (id) =>{

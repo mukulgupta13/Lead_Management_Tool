@@ -51,6 +51,7 @@ const LeadForm = () => {
             })
         }
         else {
+            
             createLead(formData).then((res) => {
                 navigate('/lead-list');
             }).catch((err) => {
