@@ -45,7 +45,7 @@ const createLead = async (req, res) => {
 
 const getLeads = async (req, res) => {
   try {
-    const { page = 1, limit = 10, search = '', status = '', sort = 'leadName', nextFollowUpDate } = req.query;
+    const { page = 1, limit = 10, search = '', status = '', nextFollowUpDate } = req.query;
 
     // Create a dynamic query object based on the search and filter parameters
     let query = {};
@@ -72,7 +72,7 @@ const getLeads = async (req, res) => {
     }
     // Fetch filtered, searched, and paginated leads
     const leads = await Lead.find(query)
-      .sort({ [sort]: 1 })        // Sorting
+      // .sort({ [sort]: 1 })        // Sorting
       .skip((page - 1) * limit)   // Pagination
       .limit(Number(limit));      // Limit number of results
 

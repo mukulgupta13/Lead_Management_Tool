@@ -8,7 +8,7 @@ import Pagination from '../../common_comp/Pagination';
 import DatePicker from 'react-datepicker';
 
 
-let PageSize = 5;
+let PageSize = 20;
 const LeadList = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
